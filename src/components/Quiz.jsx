@@ -6,7 +6,9 @@ export default function Quiz (props) {
         return <Question question={item.question} 
         answers={item.answers}
         correctAnswer={item.correctAnswer}
-        id={props.id}/>
+        selectAnswer={item.selectAnswer}
+        id={item.id}
+        key={item.id}/>
     })
     return (
         <>

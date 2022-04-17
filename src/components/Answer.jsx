@@ -8,6 +8,8 @@ function Answer(props) {
         <button
             className={props.isSelected ? "selected" : ""}
             onClick={handleClick}
+            id={props.id}
+            key={props.id}
         >{props.answer}</button>
     )
 }

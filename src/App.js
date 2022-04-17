@@ -18,7 +18,7 @@ function App () {
                         answer: he.decode(answer),
                         isCorrectAnswer: answer === item.correct_answer, //Checking if answer is the right one
                         isSelected: false,
-                        handleClick: {selectAnswer},
+                        // handleClick: {selectAnswer},
                         id: nanoid()
                     }
                 })
@@ -32,25 +32,14 @@ function App () {
         }
         getQuestions()
     }, [])
-
+    console.log(questions)
     function selectAnswer (answerId) {
-        setQuestions(prev => {
-            return prev.map(ques=> {
-                const newAnswers = ques.answers.map(ans => {
-                   return ans.id === answerId ? {...ans, isSelected: !ans.isSelected} : ans
-                })
-                return {
-                    ...ques,
-                    answers: newAnswers
-                }
-            })
-        })
+        console.log(answerId)
     }
-    selectAnswer()
     return (
         <Quiz questions={questions}
-              selectAnswer={selectAnswer}
-              />
+            selectAnswer={selectAnswer}
+             />
     )
 }
 
