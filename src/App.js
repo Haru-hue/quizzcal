@@ -31,12 +31,26 @@ function App () {
             }))
         }
         getQuestions()
-    }, [])
+    }, [selectAnswer])
     function selectAnswer(event) {
         const clickedAnswer = (event.target.innerHTML)
         const clickedQuestion = (event.target.parentElement.firstChild.innerHTML)
-        console.log(clickedAnswer + " hsk" + clickedQuestion)
-        
+
+            const updatedQuiz = questions.map(function(question) {
+                if(question.question === clickedQuestion) {
+                    const updatedAnswers = question.answers.map(function(answer) {
+                        if(answer.text === clickedAnswer) {
+                            return{...answer, isSelected:true}
+                        } else {
+                           return{...answer, isSelected:false}
+                        }                     
+                    })
+                    return{...question, answers:updatedAnswers}
+                } else {
+                    return{...question}
+                } 
+        })
+        setQuestions(prevQuiz => updatedQuiz)
     }
     return (
         <Quiz questions={questions}
