@@ -18,7 +18,7 @@ function App () {
                         answer: he.decode(answer),
                         isCorrectAnswer: answer === item.correct_answer, //Checking if answer is the right one
                         isSelected: false,
-                        // handleClick: {selectAnswer},
+                        handleClick: {selectAnswer},
                         id: nanoid()
                     }
                 })
@@ -32,9 +32,11 @@ function App () {
         }
         getQuestions()
     }, [])
-    console.log(questions)
-    function selectAnswer (answerId) {
-        console.log(answerId)
+    function selectAnswer(event) {
+        const clickedAnswer = (event.target.innerHTML)
+        const clickedQuestion = (event.target.parentElement.firstChild.innerHTML)
+        console.log(clickedAnswer + " hsk" + clickedQuestion)
+        
     }
     return (
         <Quiz questions={questions}

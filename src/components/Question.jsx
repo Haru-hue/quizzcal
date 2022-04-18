@@ -5,9 +5,8 @@ function Question(props) {
     const AnswerArr = props.answers.map(item => {
         return <Answer answer={item.answer}
                 isSelected={item.isSelected}
-                selectAnswer={item.selectAnswer}
-                id={item.id}
-                key={item.id}/>
+                selectAnswer={props.selectAnswer}
+                id={props.id}/>
     })
     return (
         <section className = "question--container">
