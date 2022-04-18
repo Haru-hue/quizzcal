@@ -3,7 +3,7 @@ import React from "react";
 function Answer(props) {
     return (
         <button
-            className={props.isSelected ? "selected" : ""}
+            className={`answer--button ${props.isSelected ? "selected" : ""}`}
             onClick={props.selectAnswer}
         >{props.answer}</button>
     )

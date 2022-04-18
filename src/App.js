@@ -31,31 +31,36 @@ function App () {
             }))
         }
         getQuestions()
-    }, [selectAnswer])
+    },[])
+
     function selectAnswer(event) {
         const clickedAnswer = (event.target.innerHTML)
-        const clickedQuestion = (event.target.parentElement.firstChild.innerHTML)
-
+        const clickedQuestion = (event.target.parentElement.parentNode.firstChild.innerHTML)
             const updatedQuiz = questions.map(function(question) {
                 if(question.question === clickedQuestion) {
                     const updatedAnswers = question.answers.map(function(answer) {
-                        if(answer.text === clickedAnswer) {
-                            return{...answer, isSelected:true}
-                        } else {
-                           return{...answer, isSelected:false}
-                        }                     
+                        return answer.answer === clickedAnswer ? 
+                        {...answer, isSelected: true} : {...answer, isSelected: false}             
                     })
-                    return{...question, answers:updatedAnswers}
+                    return {...question, answers:updatedAnswers}
                 } else {
-                    return{...question}
+                    return {...question}
                 } 
         })
         setQuestions(prevQuiz => updatedQuiz)
     }
+
     return (
+        <main>
+            <div className="circle--top"></div>
         <Quiz questions={questions}
             selectAnswer={selectAnswer}
              />
+             <button 
+                className="check--button"
+                >Check answers</button>
+             <div className="circle--bottom"></div>
+        </main>
     )
 }
 
