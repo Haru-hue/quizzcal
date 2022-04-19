@@ -6,6 +6,7 @@ import { nanoid } from "nanoid";
 
 function App () {
     const [questions, setQuestions] = useState([])
+    const [quiz, setQuiz] = useState(false)
     
     useEffect(()=> {
         async function getQuestions () {
@@ -19,6 +20,7 @@ function App () {
                         isCorrectAnswer: answer === item.correct_answer, //Checking if answer is the right one
                         isSelected: false,
                         handleClick: {selectAnswer},
+                        isAnswered: false,
                         id: nanoid()
                     }
                 })
@@ -26,6 +28,7 @@ function App () {
                     question: he.decode(item.question),
                     answers: answerArr.sort((a, b) => Math.random() - 0.5), //Shuffles the answer
                     correctAnswer: he.decode(item.correct_answer),
+                    isAnswered: false,
                     id: nanoid()
                 }
             }))
@@ -40,24 +43,40 @@ function App () {
                 if(question.question === clickedQuestion) {
                     const updatedAnswers = question.answers.map(function(answer) {
                         return answer.answer === clickedAnswer ? 
-                        {...answer, isSelected: true} : {...answer, isSelected: false}             
+                        {...answer, isSelected: true, isAnswered: true} : 
+                        {...answer, isSelected: false, isAnswered: false}             
                     })
-                    return {...question, answers:updatedAnswers}
+                    return {...question, answers:updatedAnswers, isAnswered: true}
                 } else {
-                    return {...question}
+                    return {...question, isAnswered: false}
                 } 
         })
         setQuestions(prevQuiz => updatedQuiz)
     }
 
+    
+    useEffect(()=> {
+        const allQuestions = questions.every(item => item.isAnswered)
+        console.log("All:" + allQuestions)
+        // if(allQuestions) {
+        //     console.log("True")
+        // }
+    }, [questions]) 
+   
+
+    function checkAnswers () {
+        return quiz ? console.log("Answers checked") : console.log("You have not answered all questions")
+    }
+
     return (
         <main>
             <div className="circle--top"></div>
-        <Quiz questions={questions}
+            <Quiz questions={questions}
             selectAnswer={selectAnswer}
              />
              <button 
                 className="check--button"
+                onClick={checkAnswers}
                 >Check answers</button>
              <div className="circle--bottom"></div>
         </main>
