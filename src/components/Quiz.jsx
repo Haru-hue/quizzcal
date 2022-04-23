@@ -7,6 +7,8 @@ export default function Quiz (props) {
         answers={item.answers}
         correctAnswer={item.correctAnswer}
         id={props.id}
+        isChecked={props.isChecked}
+        key={props.id}
         selectAnswer={props.selectAnswer}/>
     })
     return (

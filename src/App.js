@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Quiz from "./components/Quiz";
+import Start from "./components/Start";
 import he from "he"
 import "./App.css"
 import { nanoid } from "nanoid";
@@ -9,10 +10,11 @@ function App () {
     const [count, setCount] = useState(0)
     const [game, setGame] = useState(false)
     const [isChecked, setChecked] = useState(false)
+    const [message, setMessage] = useState("")
 
     useEffect(()=> {
         async function getQuestions () {
-            const res = await fetch ("https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple")
+            const res = await fetch (`https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple`)
             const data = await res.json()
             setQuestions(data.results.map(item => {
                 item.incorrect_answers.push(item.correct_answer)
@@ -45,7 +47,6 @@ function App () {
         setQuestions((prevQuiz) => 
         validateQuiz(prevQuiz, clickedAnswer, clickedQuestion))
     }
-    console.log(questions)
 
     const validateQuiz = (questions, clickedAnswer, clickedQuestion) => 
         questions.map((question) => {
@@ -72,9 +73,8 @@ function App () {
                    return count + 1
                 }
                 return count
-            })
-            setCount(correctAnswers)
-            console.log(`You got ${count}/5 questions right`)
+            }, 0)
+            return `You got ${correctAnswers}/5 questions right`
         } else {
             return "Make sure to answer all the questions"
         }
@@ -87,21 +87,36 @@ function App () {
     function handleClick () {
         if(questions.every(question => question.isAnswered)) toggleCheck()
     }
-        
+
+    // function handleChange (event) {
+    //     const clicked = event.target
+    //     setFormData(prevFormData => {
+    //        return{ 
+    //            level: clicked.value,
+    //         number: clicked.value
+    //     }
+    //     })
+    // }
+    console.log(questions)
+    function startGame () {
+        setGame(true)
+    }  
 
     return (
         <main>
-        <div className="circle--top"></div>
+        <div className="circle--top"></div>       
             <Quiz questions={questions}
-            selectAnswer={selectAnswer}
-             />
-             {/* {isChecked ? checkAnswers() : "Make sure to answer all the questions"} */}
-           <div className="answer--container">
-                <button 
-                        className="check--button"
-                        onClick={checkAnswers}
-                        >Check answers</button>
-           </div>
+                selectAnswer={selectAnswer} checkAnswers={checkAnswers} key={questions.id}
+            />
+            
+            <div className="answer--container">
+                <h3 className="checked">
+                    {isChecked ? checkAnswers() : "Make you answer all the questions"}</h3>
+
+            <button className="check--button" 
+                onClick={handleClick}>Check Answers</button>
+            </div>
+            
         <div className="circle--bottom"></div>
         </main>
     )
