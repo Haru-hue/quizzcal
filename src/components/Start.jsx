@@ -25,8 +25,8 @@ function Start (props) {
                     className="game-input"
                     placeholder="10"
                     onChange={props.handleChange}
-                    name="no"
-                    value={props.no}
+                    name="number"
+                    value={props.number}
                     min="1"
                     max="15"
                 />

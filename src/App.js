@@ -10,11 +10,13 @@ function App () {
     const [count, setCount] = useState(0)
     const [game, setGame] = useState(false)
     const [isChecked, setChecked] = useState(false)
-    const [message, setMessage] = useState("")
+    const [formData, setFormData] = useState({
+        level: "", number: 0
+    })
 
     useEffect(()=> {
         async function getQuestions () {
-            const res = await fetch (`https://opentdb.com/api.php?amount=5&category=9&difficulty=medium&type=multiple`)
+            const res = await fetch (`https://opentdb.com/api.php?amount=${formData.number}&category=9&difficulty=${formData.level}&type=multiple`)
             const data = await res.json()
             setQuestions(data.results.map(item => {
                 item.incorrect_answers.push(item.correct_answer)
@@ -38,7 +40,7 @@ function App () {
             }))
         }
         getQuestions()
-     }, [])
+     }, [formData.level, formData.number])
     
     function selectAnswer(event) {
         const clickedAnswer = (event.target.innerHTML)
@@ -74,7 +76,7 @@ function App () {
                 }
                 return count
             }, 0)
-            return `You got ${correctAnswers}/5 questions right`
+            return `You got ${correctAnswers}/${formData.number} questions right`
         } else {
             return "Make sure to answer all the questions"
         }
@@ -88,33 +90,35 @@ function App () {
         if(questions.every(question => question.isAnswered)) toggleCheck()
     }
 
-    // function handleChange (event) {
-    //     const clicked = event.target
-    //     setFormData(prevFormData => {
-    //        return{ 
-    //            level: clicked.value,
-    //         number: clicked.value
-    //     }
-    //     })
-    // }
-    console.log(questions)
     function startGame () {
         setGame(true)
     }  
 
+    function handleChange (event) {
+        const name = event.target.name
+        const value = event.target.value
+        setFormData(prevData => {
+            return {
+                ...prevData,
+                [name]: value
+            }
+        })
+    }
+
     return (
         <main>
         <div className="circle--top"></div>       
-            <Quiz questions={questions}
-                selectAnswer={selectAnswer} checkAnswers={checkAnswers} key={questions.id}
-            />
+            {game ? <Quiz questions={questions}
+                selectAnswer={selectAnswer} checkAnswers={checkAnswers} isChecked={isChecked}
+                /> : <Start handleChange={handleChange}/> }
             
             <div className="answer--container">
-                <h3 className="checked">
-                    {isChecked ? checkAnswers() : "Make you answer all the questions"}</h3>
+                {game && <h3 className="checked">
+                    {isChecked ? checkAnswers() : "Make you answer all the questions"}
+                </h3>}
 
             <button className="check--button" 
-                onClick={handleClick}>Check Answers</button>
+                onClick={game ? handleClick : startGame}>{game ? "Check Answers" : "Start Game"}</button>
             </div>
             
         <div className="circle--bottom"></div>

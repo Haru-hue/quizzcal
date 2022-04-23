@@ -6,9 +6,9 @@ function Question(props) {
         return <Answer answer={item.answer}
                 isSelected={item.isSelected}
                 selectAnswer={props.selectAnswer}
-                isCorrectAnswer={props.isCorrectAnswer}
+                isCorrectAnswer={item.isCorrectAnswer}
                 isChecked={props.isChecked}
-                id={props.id} key={props.id}/>
+                id={item.id} key={item.id}/>
     })
     return (
         <section className = "question--container">
