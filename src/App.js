@@ -24,7 +24,6 @@ function App () {
                         answer: he.decode(answer),
                         isCorrectAnswer: answer === item.correct_answer, //Checking if answer is the right one
                         isSelected: false,
-                        handleClick: {selectAnswer},
                         isAnswered: false,
                         id: nanoid()
                     }
@@ -83,6 +82,7 @@ function App () {
 
     function toggleCheck () {
         setChecked(prev => !prev)
+        selectAnswer()
     }
 
     function handleClick () {
@@ -95,6 +95,7 @@ function App () {
 
     function resetGame () {
         setGame(false)
+        setQuestions([])
         setChecked(false)
     }
 
