@@ -3,10 +3,10 @@ import React from "react";
 function Start (props) {
     return (
         <section className="quiz--container">
-            <h2>Quiz!</h2>
-            <p>Start a New Game</p>
+            <h1>Quizzical!</h1>
+            <h3>Start a New Game</h3>
             <div className="options">
-                <label htmlFor="game-options">Choose a difficulty:</label>
+                <label htmlFor="game-options">Choose a difficulty :</label>
                 <select 
                     defaultValue={'DEFAULT'}
                     className="game-options"

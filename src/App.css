@@ -22,7 +22,7 @@ main {
     align-items: center;
 }
 
-.question--container, .quiz--container {
+.question--container {
     margin: 7.5px;
 }
 
@@ -60,14 +60,18 @@ button {
     font-weight: 600;
     color: #F5F7FB;
     border: none;
-    padding: 20px;
+    padding: 15px 40px;
     margin-top: 10px;
 }
 
 .game-options, .game-input {
-    padding: 1.5rem;
+    font-family: 'Karla', sans-serif;
+    padding: 1rem;
+    padding-right: 4rem;
+    border: 1px solid #D5D4D8;
     margin: 5px;
     border-radius: 5px;
+    width: 100%;
 }
 .checked {
     margin-right: 10px;

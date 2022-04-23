@@ -7,7 +7,6 @@ import { nanoid } from "nanoid";
 
 function App () {
     const [questions, setQuestions] = useState([])
-    const [count, setCount] = useState(0)
     const [game, setGame] = useState(false)
     const [isChecked, setChecked] = useState(false)
     const [formData, setFormData] = useState({
@@ -78,7 +77,7 @@ function App () {
             }, 0)
             return `You got ${correctAnswers}/${formData.number} questions right`
         } else {
-            return "Make sure to answer all the questions"
+            return `Make sure to answer all the questions`
         }
     }
 
@@ -93,6 +92,11 @@ function App () {
     function startGame () {
         setGame(true)
     }  
+
+    function resetGame () {
+        setGame(false)
+        setChecked(false)
+    }
 
     function handleChange (event) {
         const name = event.target.name
@@ -110,15 +114,12 @@ function App () {
         <div className="circle--top"></div>       
             {game ? <Quiz questions={questions}
                 selectAnswer={selectAnswer} checkAnswers={checkAnswers} isChecked={isChecked}
+                resetGame={resetGame} handleClick={handleClick}
                 /> : <Start handleChange={handleChange}/> }
             
             <div className="answer--container">
-                {game && <h3 className="checked">
-                    {isChecked ? checkAnswers() : "Make you answer all the questions"}
-                </h3>}
-
-            <button className="check--button" 
-                onClick={game ? handleClick : startGame}>{game ? "Check Answers" : "Start Game"}</button>
+                {!game && <button className="check--button" 
+                onClick={startGame}>Start Game</button>}
             </div>
             
         <div className="circle--bottom"></div>

@@ -9,7 +9,6 @@ const correctStyles = {
 const incorrectStyles = {
     opacity: 0.6,
     color: "#414535",
-    backgroundColor: "#96BBBB",
     cursor: "default"
 }
 

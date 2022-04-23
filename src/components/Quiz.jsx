@@ -14,6 +14,15 @@ export default function Quiz (props) {
     return (
         <>
             {questionElements}
+            <div className="answer--container">
+                <h3 className="checked">
+                    {props.isChecked ? props.checkAnswers() : "Make sure to answer all the questions"}
+                </h3>
+
+            <button className="check--button" 
+                onClick={props.isChecked ? props.resetGame : props.handleClick}>
+                    {props.isChecked ? "New Game" : "Check Answers"}</button>
+            </div>
         </>
     )
 }
